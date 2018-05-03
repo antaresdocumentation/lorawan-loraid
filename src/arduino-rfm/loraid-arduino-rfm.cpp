@@ -104,9 +104,11 @@ void LoRaIdClass::init(void)
     LoRa_Settings.Channel_Hopping = 0x00; //0x00 no channel hopping, 0x01 channel hopping
 
     // Initialise buffer for data to transmit
+    memset(Data_Tx, 0x00, sizeof(Data_Tx));
     Buffer_Tx.Data = Data_Tx;
     Buffer_Tx.Counter = 0x00;
     // Initialise buffer for data to receive
+    memset(Data_Rx, 0x00, sizeof(Data_Rx));
     Buffer_Rx.Data = Data_Rx;
     Buffer_Rx.Counter = 0x00;
     Message_Rx.Direction = 0x01; //Set down direction for Rx message
@@ -155,22 +157,31 @@ void LoRaIdClass::join(void)
 
 void LoRaIdClass::AccessKey(unsigned char *accessKey_in, unsigned char *devAddr_in)
 {
+    memset(Session_Data.DevAddr, 0x30, sizeof(Session_Data.DevAddr));
+    memset(Session_Data.NwkSKey, 0x30, sizeof(Session_Data.NwkSKey));
+    memset(Session_Data.AppSKey, 0x30, sizeof(Session_Data.AppSKey));
     unsigned char NwkSKey_temp[32];
     unsigned char AppSKey_temp[32];
-    memset(NwkSKey_temp, 0x30, 32);
-    memset(AppSKey_temp, 0x30, 32);
+    
+    memset(NwkSKey_temp, 0x30, sizeof(NwkSKey_temp));
+    memset(AppSKey_temp, 0x30, sizeof(NwkSKey_temp));
     memcpy(&NwkSKey_temp[16], &accessKey_in[0], 16);
-    memcpy(&AppSKey_temp[0], &accessKey_in[16], 16); 
+    memcpy(&AppSKey_temp[0], &accessKey_in[17], 16); 
 
     Mac_DevAddr(devAddr_in, Address_Tx);
-    Mac_NwkSKey(&accessKey_in[0], NwkSKey);
-    Mac_AppSKey(&accessKey_in[16], AppSKey);
+    Mac_NwkSKey(NwkSKey_temp, NwkSKey);
+    Mac_AppSKey(AppSKey_temp, AppSKey);
 
     //Reset frame counter
     Frame_Counter_Tx = 0x0000;
 
     //Reset RFM command status
     RFM_Command_Status = NO_RFM_COMMAND;
+}
+
+void LoRaIdClass::AccessKey(char *accessKey_in, char *devAddr_in)
+{
+    AccessKey((unsigned char *)accessKey_in, (unsigned char *)devAddr_in);
 }
 
 void LoRaIdClass::setDeviceClass(devclass_t dev_class)
@@ -210,6 +221,11 @@ void LoRaIdClass::sendToAntares(unsigned char *data, unsigned int len, unsigned 
     Mac_Data(data, len, &Buffer_Tx);
 }
 
+void LoRaIdClass::sendToAntares(char *data, unsigned int len, unsigned char confirm)
+{
+    sendToAntares((unsigned char *)data, len, confirm);
+}
+
 void LoRaIdClass::setDataRate(unsigned char data_rate)
 {
     drate_common = data_rate;
@@ -217,6 +233,11 @@ void LoRaIdClass::setDataRate(unsigned char data_rate)
     
     //Reset RFM command
     RFM_Command_Status = NO_RFM_COMMAND;
+}
+
+void LoRaIdClass::setTxPower(unsigned char power_idx)
+{
+    Mac_Power(power_idx, &LoRa_Settings.Transmit_Power);
 }
 
 void LoRaIdClass::update(void)

@@ -429,12 +429,24 @@ void Mac_Data(unsigned char *buffer, unsigned int len, sBuffer *RFM_Buffer)
 {
   RFM_Buffer->Counter = len;
   memcpy(RFM_Buffer->Data, buffer, len);
+  // unsigned int len_temp = len;
+  // unsigned char i;
+
+  // //Check for an even number of received data bytes other wise fill whit 0x00
+  // if(len % 2)
+  // {
+  //   buffer[len] = 0x00;
+  //   len_temp++;
+  // }
+
+  // RFM_Buffer->Counter = len_temp / 2;
+
+  // for(i = 0x00; i < RFM_Buffer->Counter; i++)
+  // {
+  //   RFM_Buffer->Data[i] = ASCII2Hex(buffer[i*2],buffer[(i*2)+1]);
+  // }
 
   Serial.write("Data ");
   UART_Send_Data(RFM_Buffer->Data,RFM_Buffer->Counter);
   UART_Send_Newline();
 }
-
-
-
-

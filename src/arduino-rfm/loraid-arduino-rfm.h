@@ -49,54 +49,6 @@
 
 typedef enum {NO_RX, NEW_RX} rx_t;
 
-/*
-*****************************************************************************************
-* DEFINES
-*****************************************************************************************
-*/
-
-#if defined(ESP8266)
-
-#ifdef BOARD_DRAGINO_SHIELD
-    #define DIO0    16
-    #define DIO1    2
-    #define DIO5    12
-    #define DIO2    14
-    #define CS      15
-    #define RFM_RST 13        
-#elif defined BOARD_CYTRON_SHIELD
-    #define DIO0    16
-    #define DIO1    0
-    #define DIO2    2
-    #define CS      15
-    #define RFM_RST 14       
-#elif defined BOARD_CUSTOM
-#else
-#error "Unsupported shield"
-#endif
-
-#else
-
-#ifdef BOARD_DRAGINO_SHIELD
-    #define DIO0    2
-    #define DIO1    6
-    #define DIO5    8
-    #define DIO2    7
-    #define CS      10
-    #define RFM_RST 9        
-#elif defined BOARD_CYTRON_SHIELD
-    #define DIO0    2
-    #define DIO1    5
-    #define DIO2    6
-    #define CS      10
-    #define RFM_RST 7        
-#elif defined BOARD_CUSTOM
-#else
-#error "Unsupported shield"
-#endif
-
-#endif
-
 #define LORAID_VERSION "1.0.0"
 /*
 *****************************************************************************************
@@ -114,9 +66,12 @@ class LoRaIdClass
         void init(void);
         void join(void);
         void AccessKey(unsigned char *accessKey_in, unsigned char *devAddr_in);
+        void AccessKey(char *accessKey_in, char *devAddr_in);
         void setDeviceClass(devclass_t dev_class);
         void sendToAntares(unsigned char *data, unsigned int len, unsigned char confirm);
+        void sendToAntares(char *data, unsigned int len, unsigned char confirm);
         void setDataRate(unsigned char data_rate);
+        void setTxPower(unsigned char power_idx);
         void update(void);
 
     private:        
