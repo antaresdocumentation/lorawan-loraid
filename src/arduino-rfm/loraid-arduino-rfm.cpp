@@ -199,6 +199,8 @@ void LoRaIdClass::sendToAntares(unsigned char *data, unsigned int len, unsigned 
     // Random freq
     #ifdef AS_923
     freq_idx = random(0, 9);
+    // freq_idx = 4;    // test
+    
     // limit drate, ch 8 -> sf7bw250
     if(freq_idx == 0x08)
     {

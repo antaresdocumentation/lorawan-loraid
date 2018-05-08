@@ -65,6 +65,7 @@
 void LORA_Cycle(sBuffer *Data_Tx, sBuffer *Data_Rx, RFM_command_t *RFM_Command, sLoRa_Session *Session_Data, sLoRa_OTAA *OTAA_Data, sLoRa_Message *Message_Rx, sSettings *LoRa_Settings)
 {
 	unsigned char i;
+	unsigned int Receive_Delay_1 = 950;
 	unsigned int Receive_Delay_2 = 1950;
 	unsigned int Receive_Delay_JoinAck = 5950;
 
@@ -79,9 +80,27 @@ void LORA_Cycle(sBuffer *Data_Tx, sBuffer *Data_Rx, RFM_command_t *RFM_Command, 
 	//Send normal data message
   	if(*RFM_Command == NEW_RFM_COMMAND)
   	{
+	  unsigned char Channel_Rx_1 = LoRa_Settings->Channel_Tx;
+	  unsigned char Datarate_Rx_1 = LoRa_Settings->Datarate_Tx;
+	  unsigned char Channel_Rx_2 = LoRa_Settings->Channel_Rx;
+	  unsigned char Datarate_Rx_2 = LoRa_Settings->Datarate_Rx;
+	   
   	  LORA_Send_Data(Data_Tx, Session_Data, LoRa_Settings);
+	  
+	  // Add RX1 window
+      LoRa_Settings->Channel_Rx = Channel_Rx_1;    // set Rx1 channel, same with Tx
+      LoRa_Settings->Datarate_Rx = Datarate_Rx_1;   //set data rate Rx1, same with Tx
 
-  	  delay(Receive_Delay_2);
+	  delay(Receive_Delay_1);
+	  LORA_Receive_Data(Data_Rx, Session_Data, OTAA_Data, Message_Rx, LoRa_Settings);
+
+	  Serial.print((char *)Data_Rx->Data);
+
+	  // RX2 window
+      LoRa_Settings->Channel_Rx = Channel_Rx_2;    // set Rx2 channel
+      LoRa_Settings->Datarate_Rx = Datarate_Rx_2;   //set data rate Rx2
+
+  	  delay(Receive_Delay_2-Receive_Delay_1);
     }
 
 	 LORA_Receive_Data(Data_Rx, Session_Data, OTAA_Data, Message_Rx, LoRa_Settings);
