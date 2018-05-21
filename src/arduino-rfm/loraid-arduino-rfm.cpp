@@ -165,8 +165,8 @@ void LoRaIdClass::AccessKey(unsigned char *accessKey_in, unsigned char *devAddr_
     
     memset(NwkSKey_temp, 0x30, sizeof(NwkSKey_temp));
     memset(AppSKey_temp, 0x30, sizeof(NwkSKey_temp));
-    memcpy(&NwkSKey_temp[16], &accessKey_in[0], 16);
-    memcpy(&AppSKey_temp[0], &accessKey_in[17], 16); 
+    memcpy(&NwkSKey_temp[0], &accessKey_in[0], 16);
+    memcpy(&AppSKey_temp[16], &accessKey_in[17], 16); 
 
     Mac_DevAddr(devAddr_in, Address_Tx);
     Mac_NwkSKey(NwkSKey_temp, NwkSKey);
