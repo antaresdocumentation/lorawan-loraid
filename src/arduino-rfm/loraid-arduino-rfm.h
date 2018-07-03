@@ -65,13 +65,16 @@ class LoRaIdClass
         
         void init(void);
         void join(void);
-        void AccessKey(unsigned char *accessKey_in, unsigned char *devAddr_in);
-        void AccessKey(char *accessKey_in, char *devAddr_in);
+        void setAccessKey(unsigned char *accessKey_in);
+        void setAccessKey(char *accessKey_in);
+        void setDeviceId(unsigned char *devAddr_in);
+        void setDeviceId(char *devAddr_in);
         void setDeviceClass(devclass_t dev_class);
         void sendToAntares(unsigned char *data, unsigned int len, unsigned char confirm);
         void sendToAntares(char *data, unsigned int len, unsigned char confirm);
         void setDataRate(unsigned char data_rate);
         void setTxPower(unsigned char power_idx);
+        int readData(char *outBuff);
         void update(void);
 
     private:        

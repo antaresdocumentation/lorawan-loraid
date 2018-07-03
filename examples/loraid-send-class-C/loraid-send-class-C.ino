@@ -9,18 +9,22 @@ void setup() {
   lora.init();
 
   // Set LoRaWAN Class
-  lora.setDeviceClass(CLASS_A);
+  lora.setDeviceClass(CLASS_C);
 
   // Set Data Rate
   lora.setDataRate(2);
   
   // Put Antares Key and DevAddress here
-  lora.AccessKey((unsigned char *)"8878f39f897b9a50:bd6b3446f4c13871", (unsigned char *)"00000001");
+  lora.AccessKey("8878f39f897b9a50:bd6b3446f4c13871");
+  lora.DeviceId("00000001");
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   char myStr[50];
+  char outStr[255];
+  int recvStatus = 0;
+  
   unsigned long currentMillis = millis();
 
   // Check interval overflow
@@ -29,6 +33,11 @@ void loop() {
 
     sprintf(myStr, "Ini data LoRa ke-%d", counter); 
     lora.sendToAntares((unsigned char *)myStr, strlen(myStr), 0);
+  }
+
+  recvStatus = lora.readData(outStr);
+  if(recvStatus) {
+    Serial.println(outStr);
   }
   
   // Check Lora RX
