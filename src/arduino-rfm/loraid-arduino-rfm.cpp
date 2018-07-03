@@ -155,9 +155,8 @@ void LoRaIdClass::join(void)
     }
 }
 
-void LoRaIdClass::AccessKey(unsigned char *accessKey_in, unsigned char *devAddr_in)
+void LoRaIdClass::AccessKey(unsigned char *accessKey_in)
 {
-    memset(Session_Data.DevAddr, 0x30, sizeof(Session_Data.DevAddr));
     memset(Session_Data.NwkSKey, 0x30, sizeof(Session_Data.NwkSKey));
     memset(Session_Data.AppSKey, 0x30, sizeof(Session_Data.AppSKey));
     unsigned char NwkSKey_temp[32];
@@ -168,7 +167,6 @@ void LoRaIdClass::AccessKey(unsigned char *accessKey_in, unsigned char *devAddr_
     memcpy(&NwkSKey_temp[0], &accessKey_in[0], 16);
     memcpy(&AppSKey_temp[16], &accessKey_in[17], 16); 
 
-    Mac_DevAddr(devAddr_in, Address_Tx);
     Mac_NwkSKey(NwkSKey_temp, NwkSKey);
     Mac_AppSKey(AppSKey_temp, AppSKey);
 
@@ -179,9 +177,27 @@ void LoRaIdClass::AccessKey(unsigned char *accessKey_in, unsigned char *devAddr_
     RFM_Command_Status = NO_RFM_COMMAND;
 }
 
-void LoRaIdClass::AccessKey(char *accessKey_in, char *devAddr_in)
+void LoRaIdClass::AccessKey(char *accessKey_in)
 {
-    AccessKey((unsigned char *)accessKey_in, (unsigned char *)devAddr_in);
+    AccessKey((unsigned char *)accessKey_in);
+}
+
+void LoRaIdClass::DeviceId(unsigned char *devAddr_in)
+{
+    memset(Session_Data.DevAddr, 0x30, sizeof(Session_Data.DevAddr));
+
+    Mac_DevAddr(devAddr_in, Address_Tx);
+
+    //Reset frame counter
+    Frame_Counter_Tx = 0x0000;
+
+    //Reset RFM command status
+    RFM_Command_Status = NO_RFM_COMMAND;
+}
+
+void LoRaIdClass::DeviceId(char *devAddr_in)
+{
+    DeviceId((unsigned char *)devAddr_in);
 }
 
 void LoRaIdClass::setDeviceClass(devclass_t dev_class)
@@ -242,6 +258,26 @@ void LoRaIdClass::setTxPower(unsigned char power_idx)
     Mac_Power(power_idx, &LoRa_Settings.Transmit_Power);
 }
 
+int LoRaIdClass::readData(char *outBuff)
+{
+    int res = 0;
+
+    //If there is new data
+    if(Rx_Status == NEW_RX)
+    {
+        res = Buffer_Rx.Counter;
+        memset(outBuff, 0x00, res + 1);
+        memcpy(outBuff, Buffer_Rx.Data, res);
+        
+        // Clear Buffer counter
+        Buffer_Rx.Counter = 0x00;
+        
+        Rx_Status = NO_RX;
+    }
+
+    return res;
+}
+
 void LoRaIdClass::update(void)
 {
     //Type A mote transmit receive cycle
@@ -297,13 +333,8 @@ void LoRaIdClass::update(void)
     {
       UART_Send_Data(Buffer_Rx.Data,Buffer_Rx.Counter);
 		  
-		  UART_Send_Newline();
+	  UART_Send_Newline();
       UART_Send_Newline();
-
-      //Clear Buffer counter
-      Buffer_Rx.Counter = 0x00;
-
-      Rx_Status = NO_RX;
     }
 }
 
