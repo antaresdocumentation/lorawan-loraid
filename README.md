@@ -105,7 +105,7 @@ Setup authentication keys provisioned by Antares server, including device addres
 
 ##### Syntax
 ```c
-void AccessKey(unsigned char *accessKey_in, unsigned char *devAddr_in);
+void AccessKey(unsigned char *accessKey_in);
 ```
 
 ##### Example
@@ -116,7 +116,29 @@ void setup() {
   ...
 
   // Put Antares Key and DevAddress here
-  lora.AccessKey("8878f39f897b9a50:bd6b3446f4c13871", "00000001");
+  lora.AccessKey("8878f39f897b9a50:bd6b3446f4c13871");
+  ...
+
+}
+```
+
+#### Setup Device ID for Authentication 
+Setup device ID for activating the device.
+
+##### Syntax
+```c
+void DeviceId(unsigned char *devAddr_in);
+```
+
+##### Example
+```c
+void setup() {
+  // Setup loraid access
+  lora.init();
+  ...
+
+  // Put Antares Key and DevAddress here
+  lora.DeviceId("00000001");
   ...
 
 }
@@ -194,8 +216,9 @@ void loop() {
 } 
 ```
 
-#### Update and check for incoming data
-Update and check for incoming data. The output is thrown only to Serial at this moment. This line should be put inside the Arduino `loop` block.
+
+#### Update and run LoRa FSM
+Update and run the LoRa Finite State Machine (FSM). This line should be put inside the Arduino `loop` block.
 ##### Syntax
 ```c
 void update(void);
@@ -212,12 +235,43 @@ void loop() {
 
 ```
 
+#### Check and retrieve incoming data
+Check for the latest incoming data from server either in binary or string format. You need to provide char buffer to read the data.
+##### Syntax
+```c
+void readData(void);
+```
+
+##### Example
+```c
+
+char buffer_rx[255];
+
+void setup() {
+  ...
+}
+
+void loop() {
+  int recvStatus;
+  ...
+
+  // LoRa FSM
+  lora.update();
+
+  // Check data
+  recvStatus = lora.readData(buffer_rx);
+  if(recvStatus) {
+    Serial.println(buffer_rx);
+  }
+}
+```
 
 Examples
 --------
-This library currently provides three examples:
+This library currently provides two examples:
 
- - `loraid-send.ino` shows basic usage of Class A lora.id SDK.
+ - `loraid-send-class-A.ino` shows basic usage of Class A lora.id SDK.
+ - `loraid-send-class-C.ino` shows basic usage of Class C lora.id SDK.
 
 License
 -------
