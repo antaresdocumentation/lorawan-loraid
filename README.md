@@ -105,7 +105,7 @@ Setup authentication keys provisioned by Antares server, including device addres
 
 ##### Syntax
 ```c
-void AccessKey(unsigned char *accessKey_in);
+void setAccessKey(unsigned char *accessKey_in);
 ```
 
 ##### Example
@@ -116,7 +116,7 @@ void setup() {
   ...
 
   // Put Antares Key and DevAddress here
-  lora.AccessKey("8878f39f897b9a50:bd6b3446f4c13871");
+  lora.setAccessKey("8878f39f897b9a50:bd6b3446f4c13871");
   ...
 
 }
@@ -127,7 +127,7 @@ Setup device ID for activating the device.
 
 ##### Syntax
 ```c
-void DeviceId(unsigned char *devAddr_in);
+void setDeviceId(unsigned char *devAddr_in);
 ```
 
 ##### Example
@@ -138,7 +138,7 @@ void setup() {
   ...
 
   // Put Antares Key and DevAddress here
-  lora.DeviceId("00000001");
+  lora.setDeviceId("00000001");
   ...
 
 }

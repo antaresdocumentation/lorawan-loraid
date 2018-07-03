@@ -155,7 +155,7 @@ void LoRaIdClass::join(void)
     }
 }
 
-void LoRaIdClass::AccessKey(unsigned char *accessKey_in)
+void LoRaIdClass::setAccessKey(unsigned char *accessKey_in)
 {
     memset(Session_Data.NwkSKey, 0x30, sizeof(Session_Data.NwkSKey));
     memset(Session_Data.AppSKey, 0x30, sizeof(Session_Data.AppSKey));
@@ -177,12 +177,12 @@ void LoRaIdClass::AccessKey(unsigned char *accessKey_in)
     RFM_Command_Status = NO_RFM_COMMAND;
 }
 
-void LoRaIdClass::AccessKey(char *accessKey_in)
+void LoRaIdClass::setAccessKey(char *accessKey_in)
 {
     AccessKey((unsigned char *)accessKey_in);
 }
 
-void LoRaIdClass::DeviceId(unsigned char *devAddr_in)
+void LoRaIdClass::setDeviceId(unsigned char *devAddr_in)
 {
     memset(Session_Data.DevAddr, 0x30, sizeof(Session_Data.DevAddr));
 
@@ -195,7 +195,7 @@ void LoRaIdClass::DeviceId(unsigned char *devAddr_in)
     RFM_Command_Status = NO_RFM_COMMAND;
 }
 
-void LoRaIdClass::DeviceId(char *devAddr_in)
+void LoRaIdClass::setDeviceId(char *devAddr_in)
 {
     DeviceId((unsigned char *)devAddr_in);
 }
