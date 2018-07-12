@@ -179,7 +179,7 @@ void LoRaIdClass::setAccessKey(unsigned char *accessKey_in)
 
 void LoRaIdClass::setAccessKey(char *accessKey_in)
 {
-    AccessKey((unsigned char *)accessKey_in);
+    setAccessKey((unsigned char *)accessKey_in);
 }
 
 void LoRaIdClass::setDeviceId(unsigned char *devAddr_in)
@@ -197,7 +197,7 @@ void LoRaIdClass::setDeviceId(unsigned char *devAddr_in)
 
 void LoRaIdClass::setDeviceId(char *devAddr_in)
 {
-    DeviceId((unsigned char *)devAddr_in);
+    setDeviceId((unsigned char *)devAddr_in);
 }
 
 void LoRaIdClass::setDeviceClass(devclass_t dev_class)
