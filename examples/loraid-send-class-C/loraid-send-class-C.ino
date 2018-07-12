@@ -15,8 +15,8 @@ void setup() {
   lora.setDataRate(2);
   
   // Put Antares Key and DevAddress here
-  lora.AccessKey("8878f39f897b9a50:bd6b3446f4c13871");
-  lora.DeviceId("00000001");
+  lora.setAccessKey("8878f39f897b9a50:bd6b3446f4c13871");
+  lora.setDeviceId("00000001");
 }
 
 void loop() {
