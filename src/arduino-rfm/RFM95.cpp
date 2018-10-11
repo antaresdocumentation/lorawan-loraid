@@ -59,6 +59,8 @@ void RFM_Init()
   RFM_Change_Channel(0x00);
   //PA pin (minimal power)
   //RFM_Write(0x09,0xF0);
+  
+  // Set power to max
   RFM_Write(0x09,0xFF);
   //Switch LNA boost on
   RFM_Write(0x0C,0x23);
