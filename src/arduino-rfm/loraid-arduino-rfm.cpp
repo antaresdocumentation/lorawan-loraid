@@ -244,6 +244,49 @@ void LoRaIdClass::sendToAntares(char *data, unsigned int len, unsigned char conf
     sendToAntares((unsigned char *)data, len, confirm);
 }
 
+String LoRaIdClass::makeData(int data1, int data2, int data3, float ddata1, float ddata2, float ddata3)
+{
+    String StringOne="";
+    if(data1 && ddata1)
+    {
+        StringOne += data1;
+        StringOne += ",";
+        StringOne += String(ddata1, 4);
+    }
+    else{
+        StringOne= "";
+    }
+
+    String StringTwo="";
+    if(data2 && ddata2){
+        StringTwo += data2;
+        StringTwo += ",";
+        StringTwo += String(ddata2, 4);
+    }
+    else{
+        StringTwo=""; 
+    }
+
+    String StringThree="";
+    if(data3 && ddata3)
+    {
+        StringThree += data3;
+        StringThree += ",";
+        StringThree += String(ddata3, 4);
+    }
+    else{
+        StringThree="";
+    }
+
+    String data= "@";
+    data += StringOne;
+    data += "{";
+    data += StringTwo;
+    data += "{";
+    data += StringThree;
+    
+    return data;
+}
 void LoRaIdClass::setDataRate(unsigned char data_rate)
 {
     drate_common = data_rate;
@@ -332,7 +375,6 @@ void LoRaIdClass::update(void)
     if(Rx_Status == NEW_RX)
     {
       UART_Send_Data(Buffer_Rx.Data,Buffer_Rx.Counter);
-		  
 	  UART_Send_Newline();
       UART_Send_Newline();
     }

@@ -58,10 +58,7 @@ void RFM_Init()
   //Set channel to channel 0
   RFM_Change_Channel(0x00);
   //PA pin (minimal power)
-  //RFM_Write(0x09,0xF0);
-  
-  // Set power to max
-  RFM_Write(0x09,0xFF);
+  RFM_Write(0x09,0xF0);
   //Switch LNA boost on
   RFM_Write(0x0C,0x23);
 
@@ -524,9 +521,9 @@ void RFM_Switch_Mode(unsigned char Mode)
 
 	//Wait on mode ready
   #ifdef BOARD_DRAGINO_SHIELD
-	while(digitalRead(DIO5) == LOW)
-	{
-	}
+    // while(digitalRead(DIO5) == LOW)
+    // {
+    // }
   #endif
 }
 
