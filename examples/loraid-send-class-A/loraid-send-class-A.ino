@@ -16,7 +16,7 @@ void setup() {
   
   // Put Antares Key and DevAddress here
   lora.setAccessKey("8878f39f897b9a50:bd6b3446f4c13871");
-  lora.setDeviceId("00000001");
+  lora.setDeviceId("d1580346");
 }
 
 void loop() {
@@ -32,6 +32,7 @@ void loop() {
     previousMillis = currentMillis; 
 
     sprintf(myStr, "Ini data LoRa ke-%d", counter); 
+
     lora.sendToAntares((unsigned char *)myStr, strlen(myStr), 0);
   }
 
