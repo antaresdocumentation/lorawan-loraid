@@ -71,7 +71,7 @@ class LoRaIdClass
         void setDeviceId(char *devAddr_in);
         void setDeviceClass(devclass_t dev_class);
         void sendToAntares(unsigned char *data, unsigned int len, unsigned char confirm);
-        String makeData(int data1, int data2, int data3, float ddata1, float ddata2, float ddata3);
+        String makeData(int data1, int data2, int data3, String ddata1, String ddata2, String ddata3);
         void sendToAntares(char *data, unsigned int len, unsigned char confirm);
         void setDataRate(unsigned char data_rate);
         void setTxPower(unsigned char power_idx);
