@@ -54,7 +54,7 @@ void LoRaIdClass::init(void)
     // Status
     RFM_Command_Status = NO_RFM_COMMAND;
     Rx_Status = NO_RX;
-c
+
     // Serial Init
     Serial.begin(9600);
 
