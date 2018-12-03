@@ -2,8 +2,8 @@
 #define _CONFIG_H_
 
 // Board definition
- #define BOARD_DRAGINO_SHIELD
-//#define BOARD_CYTRON_SHIELD
+#define BOARD_DRAGINO_SHIELD
+// #define BOARD_CYTRON_SHIELD
 // #define CUSTOM_BOARD
 
 // Your custom pins
@@ -56,7 +56,7 @@
 #else
 #ifdef BOARD_DRAGINO_SHIELD
     #define DIO0    2
-    #define DIO1    3
+    #define DIO1    6
     #define DIO5    8
     #define DIO2    7
     #define CS      10
