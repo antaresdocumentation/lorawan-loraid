@@ -55,8 +55,6 @@ void LoRaIdClass::init(void)
     RFM_Command_Status = NO_RFM_COMMAND;
     Rx_Status = NO_RX;
 
-    // Serial Init
-    Serial.begin(9600);
 
     // Initialise session data struct (Semtech default key)
     memset(Address_Tx, 0x00, 4);
