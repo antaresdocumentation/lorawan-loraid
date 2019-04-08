@@ -168,15 +168,15 @@ void setup() {
 #### Set Data Rate
 You can set data rate allowed in your region (AS_923 or EU_868).
 
-| data_rate | Name | Config          |
-|-----------|------|-----------------|
-| 0         | DR0  | SF12 BW 125 KHz |
-| 1         | DR1  | SF11 BW 125 KHz |
-| 2         | DR2  | SF10 BW 125 KHz |
-| 3         | DR3  | SF9 BW 125 KHz  |
-| 4         | DR4  | SF8 BW 125 KHz  |
-| 5         | DR5  | SF7 BW 125 KHz  |
-| 6         | DR6  | SF7 BW 250 KHz  |
+| data_rate | Name | Config          | Definition |
+|-----------|------|-----------------|------------|
+| 0         | DR0  | SF12 BW 125 KHz | SF12				|
+| 1         | DR1  | SF11 BW 125 KHz | SF11				|
+| 2         | DR2  | SF10 BW 125 KHz | SF10				|
+| 3         | DR3  | SF9 BW 125 KHz  | SF9				|
+| 4         | DR4  | SF8 BW 125 KHz  | SF8				|	
+| 5         | DR5  | SF7 BW 125 KHz  | SF7				|
+| 6         | DR6  | SF7 BW 250 KHz  | SF7_250		|
 
 ##### Syntax
 ```c
@@ -192,15 +192,19 @@ void setup() {
 
   // Set Data Rate to SF10 BW 125 KHz
   lora.setDataRate(2);
+  // or 
+  lora.setDataRate(SF10); 
 }
 
 ```
 
 #### Send data to Antares
-You need to specify the length of data you want to send and also the message type (unconfirmed or confirmed message). Set `confirm = 0` to send unconfirmed message and `confirm = 1`' to send confirmed message.
-
+You can use string or char for sending your data to Antares. If you use char, you need to specify the length of data you want to send 
+You need to specify the message type (unconfirmed or confirmed message). Set `confirm = 0` to send unconfirmed message and `confirm = 1`' to send confirmed message.
 #### Syntax
 ```c
+void sendToAntares(String data, unsigned char confirm);
+// OR
 void sendToAntares(unsigned char *data, unsigned int len, unsigned char confirm);
 ```        
 
@@ -213,6 +217,11 @@ void loop() {
   lora.sendToAntares(myStr, strlen(myStr), 0);
   ...
 
+  // OR 
+
+  String myStr = "Ini data LoRaku";
+  lora.sendToAntares(myStr, 0);
+  ...
 } 
 ```
 
