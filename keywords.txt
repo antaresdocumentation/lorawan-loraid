@@ -1,4 +1,4 @@
-loraid.h	KEYWORD1
+loraid	KEYWORD1
 lora	KEYWORD1
 
 init	KEYWORD2
