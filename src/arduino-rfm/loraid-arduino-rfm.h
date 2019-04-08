@@ -56,6 +56,14 @@ typedef enum {NO_RX, NEW_RX} rx_t;
 *****************************************************************************************
 */
 
+#define SF12 0
+#define SF11 1
+#define SF10 2
+#define SF9 3
+#define SF8 4
+#define SF7 5
+#define SF7_250 6
+
 class LoRaIdClass
 {
     public:
@@ -71,6 +79,8 @@ class LoRaIdClass
         void setDeviceId(char *devAddr_in);
         void setDeviceClass(devclass_t dev_class);
         void sendToAntares(unsigned char *data, unsigned int len, unsigned char confirm);
+        void sendToAntares(String data, unsigned char confirm); // Simplified sendToAntares
+        void sendToAntares(String data); // Even more simplified sendToAntares
         String makeData(int data1, int data2, int data3, String ddata1, String ddata2, String ddata3);
         void sendToAntares(char *data, unsigned int len, unsigned char confirm);
         void setDataRate(unsigned char data_rate);

@@ -212,6 +212,45 @@ void LoRaIdClass::sendToAntares(unsigned char *data, unsigned int len, unsigned 
 {
     unsigned char freq_idx;
 
+    Serial.println((char*)data);
+    Serial.println(len);
+
+    // Random freq
+    #ifdef AS_923
+    freq_idx = random(0, 9);
+    // freq_idx = 4;    // test
+    
+    // limit drate, ch 8 -> sf7bw250
+    if(freq_idx == 0x08)
+    {
+        Mac_DrTx(0x06, &LoRa_Settings.Datarate_Tx);
+    }
+    else
+    {
+        Mac_DrTx(drate_common, &LoRa_Settings.Datarate_Tx);
+    }
+    #else
+    freq_idx = random(0, 8);
+    #endif
+    Mac_ChTx(freq_idx, &LoRa_Settings.Channel_Tx);
+
+    Mac_Confirm(confirm, &LoRa_Settings.Confirm);
+
+    //Set new command for RFM
+    RFM_Command_Status = NEW_RFM_COMMAND;
+
+    Mac_Data(data, len, &Buffer_Tx);
+}
+
+void LoRaIdClass::sendToAntares(String dataString, unsigned char confirm)
+{
+    unsigned char freq_idx;
+    
+    unsigned int len = dataString.length() + 1; 
+    char data[len];
+
+    dataString.toCharArray(data, len); 
+
     // Random freq
     #ifdef AS_923
     freq_idx = random(0, 9);
@@ -236,7 +275,43 @@ void LoRaIdClass::sendToAntares(unsigned char *data, unsigned int len, unsigned 
     //Set new command for RFM
     RFM_Command_Status = NEW_RFM_COMMAND;
     
-    Mac_Data(data, len, &Buffer_Tx);
+    Mac_Data((unsigned char*)data, strlen(data), &Buffer_Tx);
+}
+
+void LoRaIdClass::sendToAntares(String dataString)
+{
+    unsigned char freq_idx;
+    
+    unsigned int len = dataString.length() + 1; 
+    char data[len];
+
+    dataString.toCharArray(data, len); 
+
+    // Random freq
+    #ifdef AS_923
+    freq_idx = random(0, 9);
+    // freq_idx = 4;    // test
+    
+    // limit drate, ch 8 -> sf7bw250
+    if(freq_idx == 0x08)
+    {
+        Mac_DrTx(0x06, &LoRa_Settings.Datarate_Tx);
+    }
+    else
+    {
+        Mac_DrTx(drate_common, &LoRa_Settings.Datarate_Tx);
+    }
+    #else
+    freq_idx = random(0, 8);
+    #endif
+    Mac_ChTx(freq_idx, &LoRa_Settings.Channel_Tx);
+
+    Mac_Confirm(0, &LoRa_Settings.Confirm);
+
+    //Set new command for RFM
+    RFM_Command_Status = NEW_RFM_COMMAND;
+    
+    Mac_Data((unsigned char*)data, strlen(data), &Buffer_Tx);
 }
 
 void LoRaIdClass::sendToAntares(char *data, unsigned int len, unsigned char confirm)
@@ -284,6 +359,7 @@ String LoRaIdClass::makeData(int data1, int data2, int data3, String ddata1, Str
   }
   return dataKirim;
 }
+
 void LoRaIdClass::setDataRate(unsigned char data_rate)
 {
     drate_common = data_rate;
