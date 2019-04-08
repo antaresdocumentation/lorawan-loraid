@@ -277,6 +277,7 @@ Examples
 This library currently provides two examples:
 
  - `loraid-send-class-A.ino` shows basic usage of Class A lora.id SDK.
+ - `loraid-send-class-A-string.ino` shows basic usage of Class A lora.id SDK using string datatypes.
  - `loraid-send-class-C.ino` shows basic usage of Class C lora.id SDK.
 
 License
