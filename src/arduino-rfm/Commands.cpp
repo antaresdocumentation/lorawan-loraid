@@ -98,34 +98,34 @@ void UART_Send_Channel(unsigned char *Channel)
   {
     #ifdef AS_923
     case 0x00:
-      Serial.write("923.200");
+      Serial.write("920.100");
       break;
     case 0x01:
-      Serial.write("923.400");
+      Serial.write("920.300");
       break;
     case 0x02:
-      Serial.write("923.600");
+      Serial.write("920.500");
       break;
     case 0x03:
-      Serial.write("923.800");
+      Serial.write("920.700");
       break;
     case 0x04:
-      Serial.write("924.000");
+      Serial.write("920.900");
       break;
     case 0x05:
-      Serial.write("924.200");
+      Serial.write("921.100");
       break;
     case 0x06:
-      Serial.write("924.400");
+      Serial.write("921.300");
       break;
     case 0x07:
-      Serial.write("924.600");
+      Serial.write("921.500");
       break;
     case 0x08:
-      Serial.write("924.500");
+      Serial.write("921.500");
       break;
     case 0x10:
-      Serial.write("923.200");
+      Serial.write("920.100");
       break;
     #else
     case 0x00:

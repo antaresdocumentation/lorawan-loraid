@@ -407,51 +407,65 @@ void RFM_Change_Channel(unsigned char Channel)
 	switch(Channel)
 	{
     #ifdef AS_923
-		case 0x00: //Channel 0 923.200 MHz / 61.035 Hz = 15125748 = 0xE6CCF3
-    case 0x10: //Receive channel 923.200 MHz / 61.035 Hz = 15125748 = 0xE6CCF3
+    case 0x00: // DEPRECATED: Channel 0 923.200 MHz / 61.035 Hz = 15125748 = 0xE6CCF3
+    // NEW FREQ: Channel 0 920.100 MHz / 61.035 Hz = 15074956  = 0xE6068C   
+      RFM_Write(0x06,0xE6);
+			RFM_Write(0x07,0x06);
+			RFM_Write(0x08,0x8C);
+      break;
+    case 0x10: // DEPRECATED: Receive channel 923.200 MHz / 61.035 Hz = 15125748 = 0xE6CCF3
+			// NEW FREQ: Channel 0 920.100 MHz / 61.035 Hz = 15074956  = 0xE6068C   
+      RFM_Write(0x06,0xE6);
+			RFM_Write(0x07,0x06);
+			RFM_Write(0x08,0x8C);
+      break;
+    case 0x01: // DEPRECATED: Channel 1 923.400 MHz / 61.035 Hz = 15129024 = 0xE6D9C0
+			// NEW FREQ: Channel 1 920.300 MHz / 61.035 Hz = 15078233 = 0xE61359      
+      RFM_Write(0x06,0xE6);
+			RFM_Write(0x07,0x13);
+			RFM_Write(0x08,0x59);
+      break;
+    case 0x02: // DEPRECATED: Channel 2 923.600 MHz / 61.035 Hz = 15132301 = 0xE6E68D
+      // NEW FREQ: Channel 2 920.500 MHz / 61.035 Hz = 15081510  = 0xE62026
+      RFM_Write(0x06,0xE6);
+			RFM_Write(0x07,0x20);
+			RFM_Write(0x08,0x26);
+      break;
+    case 0x03: // DEPRECATED: Channel 3 923.800 MHz / 61.035 Hz = 15135578 = 0xE6F35A
+      // NEW FREQ: Channel 3 920.700 MHz / 61.035 Hz = 15084787 = 0xE62CF3 
 			RFM_Write(0x06,0xE6);
-			RFM_Write(0x07,0xCC);
+			RFM_Write(0x07,0x2C);
 			RFM_Write(0x08,0xF3);
       break;
-    case 0x01: //Channel 1 923.400 MHz / 61.035 Hz = 15129024 = 0xE6D9C0
-			RFM_Write(0x06,0xE6);
-			RFM_Write(0x07,0xD9);
+    case 0x04: // DEPRECATED: Channel 4 924.000 MHz / 61.035 Hz = 15138855 = 0xE70027
+      // NEW FREQ: : Channel 4 920.900 MHz / 61.035 Hz = 15088064  = 0xE639C0 
+      RFM_Write(0x06,0xE6);
+			RFM_Write(0x07,0x39);
 			RFM_Write(0x08,0xC0);
       break;
-		case 0x02: //Channel 2 923.600 MHz / 61.035 Hz = 15132301 = 0xE6E68D
-			RFM_Write(0x06,0xE6);
-			RFM_Write(0x07,0xE6);
+    case 0x05: // DEPRECATED: Channel 5 924.200 MHz / 61.035 Hz = 15142132 = 0xE70CF4
+      // NEW FREQ: Channel 5 921.100 MHz / 61.035 Hz = 15091341 = 0xE6468D 
+      RFM_Write(0x06,0xE6);
+			RFM_Write(0x07,0x46);
 			RFM_Write(0x08,0x8D);
       break;
-		case 0x03: //Channel 3 923.800 MHz / 61.035 Hz = 15135578 = 0xE6F35A
+    case 0x06: // DEPRECATED: Channel 6 924.400 MHz / 61.035 Hz = 15145408 = 0xE719C0
+			// NEW FREQ: Channel 6 921.300 MHz / 61.035 Hz = 15094617  = 0xE65359 
+      RFM_Write(0x06,0xE6);
+			RFM_Write(0x07,0x53);
+			RFM_Write(0x08,0x59);
+      break;
+    case 0x07: // DEPRECATED: Channel 7 924.600 MHz / 61.035 Hz = 15148685 = 0xE7268D
+		  // NEW FREQ: Channel 7 921.500 MHz / 61.035 Hz = 15097894  = 0xE66026 
+      RFM_Write(0x06,0xE6);
+			RFM_Write(0x07,0x60);
+			RFM_Write(0x08,0x26);
+      break;
+    case 0x08: // DEPRECATED: Channel 8 924.400 MHz / 61.035 Hz = 15151962 = 0xE7335A
+		  // NEW FREQ: Channel 8 921.500 MHz / 61.035 Hz = 15097894  = 0xE66026 
 			RFM_Write(0x06,0xE6);
-			RFM_Write(0x07,0xF3);
-			RFM_Write(0x08,0x5A);
-      break;
-		case 0x04: //Channel 4 924.000 MHz / 61.035 Hz = 15138855 = 0xE70027
-			RFM_Write(0x06,0xE7);
-			RFM_Write(0x07,0x00);
-			RFM_Write(0x08,0x27);
-      break;
-		case 0x05: //Channel 5 924.200 MHz / 61.035 Hz = 15142132 = 0xE70CF4
-			RFM_Write(0x06,0xE7);
-			RFM_Write(0x07,0x0C);
-			RFM_Write(0x08,0xF4);
-      break;
-		case 0x06: //Channel 6 924.400 MHz / 61.035 Hz = 15145408 = 0xE719C0
-			RFM_Write(0x06,0xE7);
-			RFM_Write(0x07,0x19);
-			RFM_Write(0x08,0xC0);
-      break;
-		case 0x07: //Channel 7 924.600 MHz / 61.035 Hz = 15148685 = 0xE7268D
-			RFM_Write(0x06,0xE7);
-			RFM_Write(0x07,0x26);
-			RFM_Write(0x08,0x8D);
-      break;
-		case 0x08: //Channel 8 924.400 MHz / 61.035 Hz = 15151962 = 0xE7335A
-			RFM_Write(0x06,0xE7);
-			RFM_Write(0x07,0x33);
-			RFM_Write(0x08,0x5A);
+			RFM_Write(0x07,0x60);
+			RFM_Write(0x08,0x26);
       break;
     #else
  		case 0x00: //Channel 0 868.100 MHz / 61.035 Hz = 14222987 = 0xD9068B
